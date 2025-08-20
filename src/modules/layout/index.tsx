@@ -65,17 +65,7 @@ const App: React.FC = () => {
       path: "/admin-layout/members",
       icon: TeamOutlined,
     },
-    {
-      content: "Events",
-      path: "/admin-layout/events",
-      icon: CalendarOutlined,
-    },
-    {
-      content: "Mediatraining",
-      path: "/admin-layout/mediatraining",
-      icon:  ReadOutlined,
-    },
-  
+   
    
   ];
 
