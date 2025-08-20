@@ -63,10 +63,16 @@ const total = data?.total || 0;      // API: total
     {
   title: "Description (En)",
   dataIndex: "description_en",
+    render: (text: string) => (
+      <div dangerouslySetInnerHTML={{ __html: text }} />
+    ),
 },
   {
   title: "Description (Uz)",
   dataIndex: "description_uz",
+   render: (text: string) => (
+      <div dangerouslySetInnerHTML={{ __html: text }} />
+    ),
 },
   {
   title: "Job name (En)",
@@ -101,7 +107,7 @@ const total = data?.total || 0;      // API: total
   return (
     <>
      <div className="flex flex-col gap-4">
-     <Modal open={modalVisible} handleCancel={handleCancel} update={update} />
+     <Modal open={modalVisible} handleCancel={handleCancel} update={update}  />
       <div className="flex justify-between p-">
         <Search params={params} setParams={setParams} />
         <Button type="primary" className="btn" onClick={() => setModalVisible(true)}>

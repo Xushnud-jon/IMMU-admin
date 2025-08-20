@@ -7,7 +7,6 @@ const AdminLayout = lazy(() => import('../modules/layout'));
 const Users = lazy(() => import('../modules/users/pages'));
 const Countries = lazy(() => import('../modules/countries/pages'));
 const Events = lazy(() => import('../modules/events/pages'));
-const Mediatraining = lazy(() => import('../modules/mediatraining/pages'));
 const Members = lazy(() => import('../modules/members/pages'));
 import  Loading  from "../components/loadable";
 import NotFound from '../components/notfound';
@@ -22,7 +21,7 @@ const Index: React.FC = () => {
                     <Route path="countries" element={<Countries />} />
                       <Route path="members" element={<Members />} />
                     <Route path="events" element={<Events />} />
-                    <Route path="mediatraining" element={<Mediatraining />} />
+                   
                 </Route>
                 <Route path="*" element={<NotFound />} />
             </Route>

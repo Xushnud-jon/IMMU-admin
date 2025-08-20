@@ -4,7 +4,7 @@ export interface RecordType {
     name:string
 }
 // src/types/index.ts or another relevant file
-export interface Country {
+export interface Events {
     id?: string | number;
     name: string;
 }
