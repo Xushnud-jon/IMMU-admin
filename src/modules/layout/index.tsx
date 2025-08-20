@@ -3,9 +3,7 @@ import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
  UserOutlined,
-  ReadOutlined,
  TeamOutlined,
- CalendarOutlined,
   GlobalOutlined,
   LogoutOutlined
 } from '@ant-design/icons';
