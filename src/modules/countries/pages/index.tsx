@@ -97,7 +97,7 @@ const total = data?.total || 0;      // API: total
       <div className="flex justify-between p-">
         <Search params={params} setParams={setParams} />
         <Button type="primary" className="btn" onClick={() => setModalVisible(true)}>
-          Add Category
+          Add Countries
         </Button>
       </div>
    <Table

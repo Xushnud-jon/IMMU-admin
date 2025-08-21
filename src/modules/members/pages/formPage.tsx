@@ -1,28 +1,29 @@
-import { Button, Form, Input, Modal, Select, Upload } from "antd";
+import { Button, Form, Input, Select, Upload } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { UploadOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
-import { type ModalPropType } from "../../../types";
 import { useCreateMembers, useUpdateMembers } from "../hooks/mutations";
 import { useCountries } from "../../countries/hooks/queryies";
 import Editor from "react-simple-wysiwyg";
+import { useNavigate, useLocation } from "react-router-dom";
 
+const MemberFormPage = () => {
+  const location = useLocation();
+  const update = location.state;
 
-
-const ModalComponent = ({ open, handleCancel, update }: ModalPropType) => {
   const [form] = useForm();
+  const navigate = useNavigate();
+
   const { mutate: createMutate, isPending: isCreating } = useCreateMembers();
   const { mutate: updateMutate, isPending: isUpdating } = useUpdateMembers();
   const { data: countries } = useCountries({ page: 1, limit: 10 });
 
   const [fileList, setFileList] = useState<any[]>([]);
-
-  // 🆕 description state
   const [descriptionUz, setDescriptionUz] = useState("");
   const [descriptionEn, setDescriptionEn] = useState("");
 
   useEffect(() => {
-    if (open && update) {
+    if (update) {
       form.setFieldsValue({
         name_uz: update.name_uz,
         name_en: update.name_en,
@@ -44,13 +45,13 @@ const ModalComponent = ({ open, handleCancel, update }: ModalPropType) => {
           },
         ]);
       }
-    } else if (open) {
+    } else {
       form.resetFields();
       setFileList([]);
       setDescriptionUz("");
       setDescriptionEn("");
     }
-  }, [open, update, form]);
+  }, [update, form]);
 
   const handleSubmit = (values: any) => {
     if (!fileList.length && !update) {
@@ -62,7 +63,6 @@ const ModalComponent = ({ open, handleCancel, update }: ModalPropType) => {
       formData.append(key, value as string)
     );
 
-    // 🆕 editor qiymatlarini qo‘shish
     formData.append("description_uz", descriptionUz);
     formData.append("description_en", descriptionEn);
 
@@ -71,35 +71,23 @@ const ModalComponent = ({ open, handleCancel, update }: ModalPropType) => {
     }
 
     if (update) {
-      updateMutate(
-        { id: update.id, formData },
-        { onSuccess: () => handleCancel() }
-      );
+      updateMutate({ id: update.id, formData }, { onSuccess: () => navigate("/admin-layout/members") });
     } else {
-      createMutate(formData as any, { onSuccess: () => handleCancel() });
+      createMutate(formData as any, { onSuccess: () => navigate("/admin-layout/members") });
     }
   };
 
   return (
-   <Modal
-  open={open}
-  title={update ? "Edit Member" : "Add Member"}
-  onCancel={handleCancel}
-  footer={null}
-  width="100%"
-  style={{ top: 0, padding: 0, maxWidth: "100%", height: "100vh" }}
-  bodyStyle={{
-    height: "calc(100vh - 55px)", // header/footer balandligini chegirib tashlaymiz
-    overflowY: "auto",
-    padding: "20px",
-  }}
->
+    <div className="w-full max-w-4xl mx-auto bg-white p-6 rounded-xl shadow">
+      <h2 className="text-xl font-bold mb-4">
+        {update ? "Edit Member" : "Add Member"}
+      </h2>
+
       <Form
         form={form}
         name="memberForm"
         layout="vertical"
         onFinish={handleSubmit}
-        style={{ width: "100%", marginTop: 20 }}
       >
         {/* Row 1 */}
         <div className="grid grid-cols-2 gap-4">
@@ -139,7 +127,7 @@ const ModalComponent = ({ open, handleCancel, update }: ModalPropType) => {
           </Form.Item>
         </div>
 
-        {/* Row 3 - Rich Text Editor */}
+        {/* Description */}
         <Form.Item label="Description (UZ)" required>
           <Editor
             value={descriptionUz}
@@ -185,7 +173,6 @@ const ModalComponent = ({ open, handleCancel, update }: ModalPropType) => {
           </Upload>
         </Form.Item>
 
-        {/* Submit */}
         <Form.Item>
           <Button
             type="primary"
@@ -198,8 +185,8 @@ const ModalComponent = ({ open, handleCancel, update }: ModalPropType) => {
           </Button>
         </Form.Item>
       </Form>
-    </Modal>
+    </div>
   );
 };
 
-export default ModalComponent;
+export default MemberFormPage;

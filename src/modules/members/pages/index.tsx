@@ -6,12 +6,10 @@ import { useSearchParams } from "react-router-dom";
 import { useMembers } from "../hooks/queryies";
 import { useDeleteMembers } from "../hooks/mutations";
 import { Table, ConfirmDelete, Search } from "../../../components";
-import Modal from "./modal";
 import {type TablePaginationConfig } from "antd/lib";
-
+import { useNavigate } from "react-router-dom";
 const Index = () => {
-  const [modalVisible, setModalVisible] = useState(false);
-  const [update, setUpdate] = useState(null);
+  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const [params, setParams] = useState({
     search: "",
@@ -44,16 +42,12 @@ const total = data?.total || 0;      // API: total
     });
   };
 
-  const editData = (data: any) => {
-    setUpdate(data);
-    setModalVisible(true);
-  };
+ const editData = (record: any) => {
+  navigate(`/admin-layout/members/${record.id}/edit`, { state: record });
+};
 
-  const handleCancel = () => {
-    setModalVisible(false);
-    setUpdate(null);
-  };
 
+ 
   const columns: ColumnsType = [
     {
       title: "ID", // ID ustuni qo'shildi
@@ -107,11 +101,12 @@ const total = data?.total || 0;      // API: total
   return (
     <>
      <div className="flex flex-col gap-4">
-     <Modal open={modalVisible} handleCancel={handleCancel} update={update}  />
+    
       <div className="flex justify-between p-">
         <Search params={params} setParams={setParams} />
-        <Button type="primary" className="btn" onClick={() => setModalVisible(true)}>
-          Add Category
+        <Button type="primary" className="btn"  onClick={() => navigate("/admin-layout/members/new")}
+ >
+          Add Members
         </Button>
       </div>
    <Table

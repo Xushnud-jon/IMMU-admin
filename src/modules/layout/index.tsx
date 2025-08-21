@@ -85,38 +85,52 @@ const App: React.FC = () => {
 
   return (
     <Layout>
-      <Sider trigger={null} collapsible collapsed={collapsed} className='min-h-[100vh]'>
-        <div />
-        <div style={{
-          height: '58px',
-          margin: '16px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: collapsed ? 'center' : 'flex-start',
-        }}>
-           <img
-    src={Immulogo}
+    <Sider
+  trigger={null}
+  collapsible
+  collapsed={collapsed}
+  className="min-h-[100vh]"
+  style={{ background: "#064420" }} // ✅ sidebar fon yashil
+>
+  {/* LOGO */}
+  <div
     style={{
-      width: collapsed ? '50px' : '170px', // 👈 collapsed bo‘lsa kichrayadi
-      height: '60px',
-      objectFit: 'contain',
-      marginRight: collapsed ? 0 : '10px',
-      transition: 'all 0.3s ease', // 👈 animatsiya chiroyli chiqishi uchun
+      height: "70px",
+      margin: "16px",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      transition: "all 0.3s ease",
     }}
+  >
+    <img
+      src={Immulogo}
+      alt="IMMU Logo"
+      style={{
+        width: collapsed ? "45px" : "150px",
+        height: "50px",
+        objectFit: "contain",
+        transition: "all 0.3s ease",
+        filter: "brightness(0) invert(1)", 
+        // 👆 Agar logoning oq versiyasi yo‘q bo‘lsa, shu orqali oq rangda chiqarish mumkin
+      }}
+    />
+  </div>
+
+  {/* MENU */}
+  <Menu
+    theme="dark"
+    mode="inline"
+    selectedKeys={selectedKeys}
+    items={admin.map((item, index) => ({
+      key: index.toString(),
+      icon: <item.icon />,
+      label: <NavLink to={item.path}>{item.content}</NavLink>,
+    }))}
+    style={{ background: "#064420" }}
   />
-        
-        </div>
-     <Menu
-  theme="dark"
-  mode="inline"
-  selectedKeys={selectedKeys}
-  items={admin.map((item, index) => ({
-    key: index.toString(),
-    icon: <item.icon />,
-    label: <NavLink to={item.path}>{item.content}</NavLink>,
-  }))}
-/>
-      </Sider>
+</Sider>
+
       <Layout>
         <Header style={{
           padding: 30,
