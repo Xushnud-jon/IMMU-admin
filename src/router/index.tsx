@@ -8,6 +8,8 @@ const Users = lazy(() => import('../modules/users/pages'));
 const Countries = lazy(() => import('../modules/countries/pages'));
 const Members = lazy(() => import('../modules/members/pages'));
 const MemberFormPage = lazy(() => import('../modules/members/pages/formPage'));
+const Events = lazy(() => import('../modules/events/pages'));
+const EventsFormPage = lazy(() => import('../modules/events/pages/formPage'));
 import  Loading  from "../components/loadable";
 import NotFound from '../components/notfound';
 
@@ -22,7 +24,8 @@ const Index: React.FC = () => {
                    <Route path="members" element={<Members />} />
 <Route path="members/new" element={<MemberFormPage />} />
 <Route path="members/:id/edit" element={<MemberFormPage />} />
-
+  <Route path="events" element={<Events />} />
+<Route path="events/new" element={<EventsFormPage />} />
                 </Route>
                 <Route path="*" element={<NotFound />} />
             </Route>
